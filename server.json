@@ -1,0 +1,22 @@
+{
+    "name": "OnkyoAVR",
+    "docs": "https://github.com/TangoWhiskey1/OnkyoAVR/blob/master/README.md",
+    "type": "python3",
+    "executable": "AVRServer.py",
+    "install": "install.sh",
+    "shortPoll": "30",
+    "longPoll": "600",
+    "description": "Connect an Onkyo or Pioneer AVR to the ISY994.",
+    "profile_version": "0.0.70",
+    "notice": "https://github.com/TangoWhiskey1/OnkyoAVR/blob/master/LICENSE",
+    "credits": [
+        {
+            "title": "Onkyo AVR Nodeserver for Polyglot V2",
+            "author": "TangoWhiskey1",
+            "version": "0.0.1",
+            "date":    "March 1, 2022",
+            "source":  "https://github.com/TangoWhiskey1/OnkyoAVRNodeserver",
+            "license": "https://github.com/TangoWhiskey1/OnkyoAVR/blob/master/LICENSE"
+        }
+    ]
+}

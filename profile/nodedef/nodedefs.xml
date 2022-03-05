@@ -1,0 +1,83 @@
+<nodeDefs>
+    <nodeDef id="AVRServer">
+        <editors />
+        <sts>
+            <st id="ST" editor="AVR_BOOL" />
+        </sts>
+        <cmds>
+            <sends>
+            </sends>
+            <accepts>
+                <cmd id="QUERY" />
+            </accepts>
+        </cmds>
+    </nodeDef>
+    <nodeDef id="AVRNode">
+        <editors />
+        <sts>
+            <st id="ST" editor="AVR_PWR" />
+            <st id="GV1" editor="AVR_MVL" />
+            <st id="GV3" editor="AVR_AMT" />
+            <st id="GV2" editor="AVR_SLI" />
+            <st id="GV4" editor="AVR_LMD" />
+            <st id="GV5" editor="AVR_LTN" />
+            <st id="GV15" editor="AVR_FREQ" />
+            <st id="GV8" editor="AVR_PRS" />
+            <st id="GV11" editor="AVR_NSV" />
+            <st id="GV12" editor="AVR_NST_PLAY" />
+            <st id="GV13" editor="AVR_NST_REPEAT" />
+            <st id="GV14" editor="AVR_NST_SHUFFLE" />
+            <st id="GV9" editor="AVR_TPD" />
+            <st id="GV10" editor="AVR_MSG" />
+        </sts>
+        <cmds>
+            <sends>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+            </sends>
+            <accepts>
+                <cmd id="DON" />
+                <cmd id="DOF" />
+                <cmd id="BRT" />
+                <cmd id="DIM" />
+                <cmd id="AMT_ON" />
+                <cmd id="AMT_OFF" />
+                <cmd id="TUN_U" />
+                <cmd id="TUN_D" />
+                <cmd id="PRS_U" />
+                <cmd id="PRS_D" />
+                <cmd id="UPDATE" />
+                <cmd id="MVL">
+                    <p id="MVL_V" editor="AVR_MVL" init="GV1" />
+                </cmd>
+                <cmd id="SLI">
+                    <p id="SLI_V" editor="AVR_SLI" init="GV2" />
+                </cmd>
+                <cmd id="TUNA">
+                    <p id="TUN_A" editor="AVR_AM" init="GV6" />
+                </cmd>
+                <cmd id="TUNF">
+                    <p id="TUN_F" editor="AVR_FM" init="GV7" />
+                </cmd>
+                <cmd id="NSV">
+                    <p id="TUN_N" editor="AVR_NSV" init="GV11" />
+                </cmd>
+                <cmd id="LMD">
+                    <p id="LMD_V" editor="AVR_LMD" init="GV4" />
+                </cmd>
+                <cmd id="LTN">
+                    <p id="LTN_V" editor="AVR_LTN" init="GV5" />
+                </cmd>
+                <cmd id="TUNC">
+                    <p id="TUN_C" editor="AVR_NTC" />
+                </cmd>
+                <cmd id="PRS">
+                    <p id="PRS_N" editor="AVR_PRS" init="GV8" />
+                </cmd>
+                <cmd id="OSD">
+                    <p id="OSD_V" editor="AVR_OSD" />
+                </cmd>
+            </accepts>
+        </cmds>
+    </nodeDef>
+</nodeDefs>

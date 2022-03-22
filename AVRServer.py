@@ -152,6 +152,11 @@ class AVRServer(polyinterface.Controller):
 
             for devName in config["customParams"]:
                 device_name = devName.strip()
+                if device_name.upper() == 'LOGGING':
+                    if config["customParams"][devName].strip().upper() == 'DEBUG':
+                        LOGGER.setLevel(logging.DEBUG)
+                        continue
+
                 device_addr = config["customParams"][devName].strip()
                 isy_addr = 's'+device_addr.replace(".","")
                 if( len(isy_addr) < _MIN_IP_ADDR_LEN ):

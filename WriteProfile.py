@@ -12,7 +12,7 @@ def writeNlsSelEntries( nls_file, entry_list, nlsPrefix, logger ):
     """
     index = 0
     for serviceName in entry_list:
-        entry = nlsPrefix + str(index) + " = "+ serviceName + "\n"
+        entry = nlsPrefix + str(index) + " = "+ serviceName.strip() + "\n"
         nls_file.write(entry)
         index = index + 1
     # Add the desired error related entries
@@ -452,44 +452,89 @@ def write_editors(logger, avr):
         editors.write('\n')
         #endregion - static code
 
-        count=avr.selectorCount() # Do not add the two we add because don't want those in the UI, but do want them programatically
+        count= 0
+        try:
+            count=avr.selectorCount() # Do not add the two we add because don't want those in the UI, but do want them programatically
+        except Exception as e:
+            logger.info('Did not get selector count, using defaults for WriteProfile: {}'.format(e))
+            count= 0
         editors.write('    <!-- Input Selector -->\n')
         editors.write('    <editor id="AVR_SLI">\n')
         editors.write('        <range uom="25" subset= "0-' + str(count) + '" nls = "SLI_SEL"/>\n') 
         editors.write('    </editor>\n')
         editors.write('\n')
-        count=avr.presetCount()
+        
+        try:
+            count=avr.presetCount()
+        except Exception as e:
+            logger.info('Did not get preset count, using default for WriteProfile: {}'.format(e))
+            count= 0
         editors.write('    <!-- Preset -->\n')
         editors.write('    <editor id="AVR_PRS">\n')
         editors.write('        <range uom="56" min="0" max="' + str(count) + '" prec="0" step="1" />\n')  
         editors.write('    </editor>\n')
         editors.write('\n')
-        count=avr.networkServicesCount() # Do not add the two we add because don't want those in the UI, but do want them programatically
+
+        try:
+            count=avr.networkServicesCount() # Do not add the two we add because don't want those in the UI, but do want them programatically
+        except Exception as e:
+            logger.info('Did not get network services count, using defaults for WriteProfile: {}'.format(e))
+            count= 0
         editors.write('    <!-- Network (Services) -->\n')
         editors.write('    <editor id="AVR_NSV">\n')
         editors.write('        <range uom="25" subset= "0-' + str(count) + '" nls = "NSV_SEL"/>\n') 
         editors.write('    </editor>\n')
         editors.write('\n')
-        tuners = avr.tuners
+
+        hasAM = False
+        hasFM = False
         minFreq = '0'
         maxFreq = '0'
-        if 'AM' in tuners:
+        amMinFreq = '0'
+        amMaxFreq = '0'
+        amStep = '0'
+        fmMinFreq = '0'
+        fmMaxFreq = '0'
+        fmStep = '0'
+        try:
+            tuners = avr.tuners
+            hasAM =  'AM' in tuners
+            amMinFreq = tuners['AM']['min']
+            amMaxFreq = tuners['AM']['max']
+            amStep    = tuners['AM']['step']
+
+            hasFM =  'FM' in tuners
+            fmMinFreq = str(float(tuners['FM']['min'])/1000)
+            fmMaxFreq = str(float(tuners['FM']['max'])/1000)
+            fmStep    = str(float(tuners['FM']['step'])/1000)
+        except Exception as e:
+            logger.info('Did not get tuner information, using defaults for WriteProfile: {}'.format(e))
+            hasAM =  True
+            hasFM =  True
+            amMinFreq = '530'
+            amMaxFreq = '1710'
+            amStep = '10'
+            fmMinFreq = '87.5'
+            fmMaxFreq = '107.9'
+            fmStep = '0.2'
+
+        if hasAM:
             editors.write('    <!-- AM Tuner -->\n') 
             editors.write('    <editor id="AVR_AM">\n')
-            editors.write('        <range uom="56" min="'+ tuners['AM']['min'] +'" max="'+ tuners['AM']['max'] +'" prec="0" step="'+ tuners['AM']['step'] +'" />\n')
+            editors.write('        <range uom="56" min="'+ amMinFreq +'" max="'+ amMaxFreq +'" prec="0" step="'+ amStep +'" />\n')
             editors.write('    </editor>\n')
             editors.write('\n')
-            minFreq = tuners['AM']['min']
-            maxFreq = tuners['AM']['max']
-        if 'FM' in tuners:
+            minFreq = amMinFreq
+            maxFreq = amMaxFreq
+        if hasFM:
             editors.write('    <!-- FM Tuner -->\n') 
             editors.write('    <editor id="AVR_FM">\n')
-            editors.write('        <range uom="56" min="'+str(float(tuners['FM']['min'])/1000) +'" max="'+ str(float(tuners['FM']['max'])/1000) +'" prec="1" step="'+ str(float(tuners['FM']['step'])/1000) +'" />\n')
+            editors.write('        <range uom="56" min="'+ fmMinFreq +'" max="'+ fmMaxFreq +'" prec="1" step="'+ fmStep +'" />\n')
             editors.write('    </editor>\n')
             editors.write('\n')
-            minFreq = str(float(tuners['FM']['min'])/1000) 
+            minFreq = fmMinFreq
             if maxFreq == '0':
-                maxFreq = str(float(tuners['FM']['max'])/1000)
+                maxFreq = fmMaxFreq
         editors.write('    <editor id="AVR_FREQ">\n')
         editors.write('        <range uom="56" min="'+ minFreq +'" max="'+ maxFreq +'" prec="1" step="1" />\n')
         editors.write('    </editor>\n')
@@ -499,4 +544,4 @@ def write_editors(logger, avr):
         logger.error('Failed to write node editor file: {}'.format(e))
     finally: 
         editors.close()
-    logger.info("Finsihed writing editors file")
+    logger.info("Finished writing editors file")

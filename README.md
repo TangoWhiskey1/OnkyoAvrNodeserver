@@ -46,7 +46,7 @@ v0.1 - Initial release.
 * I tested the services and options I have on my AVR. There are nicer and newer units than mine.  So, if you find something that does not work on yours, let me know. But know that in doing so you are volunteering to be the guinea pig used to test any changes.
 * There is a known incompatibility with the UD Mobile app v0.6.8.  This should be resolved in the next release of the app.
 
-v0.3
+v0.3.0
 
 * Fixed error in writing profile when some information not found for an AVR (thanks to glarsen for the help!)
 * Added ability to set log level in config

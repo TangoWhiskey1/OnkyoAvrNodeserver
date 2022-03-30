@@ -13,7 +13,7 @@
         {
             "title": "Onkyo AVR Nodeserver for Polyglot V2",
             "author": "TangoWhiskey1",
-            "version": "0.2",
+            "version": "0.3",
             "date":    "March 22, 2022",
             "source":  "https://github.com/TangoWhiskey1/OnkyoAVRNodeserver",
             "license": "https://github.com/TangoWhiskey1/OnkyoAVR/blob/master/LICENSE"
